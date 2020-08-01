@@ -1,0 +1,45 @@
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ * 
+ *  The goal of the game is to collect as many of the hollow squares as 
+ *  possible.
+ *
+ *  The game ends when the player collides with any of the squares marked with
+ *  a circle.
+ *
+ *  The game can be controlled using the WASD or arrow keys.
+ *
+ *  This game was written to learn more about the Jack programming language, a
+ *  custom language used in the Nand2Tetris course.
+ *  Learn more here: https://www.nand2tetris.org/
+ */
+class CollectorGame {
+    field Interface interface;
+    
+    /** Constructs a new Collector game. */
+    constructor CollectorGame new() {
+        let interface = Interface.new();
+        do interface.draw();
+        return this;
+    }
+
+    /** Frees memory and destroys the object. */
+    method void dispose() {
+        do Memory.deAlloc(interface);
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+    /** Allows the game to run. */
+    method void run() {
+        var char key; // the key that's currently being pressed by the user
+
+        // main game loop
+        while (true) {
+            let key = Keyboard.keyPressed();
+            if (key = 81) { return; } // q key
+        }
+
+        return;
+    }
+ }

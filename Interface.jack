@@ -1,0 +1,61 @@
+/** Implements the user interface. This includes the score and the borders that
+ *  surround the playing area.
+ */
+class Interface {
+    field String scoreboard; // the scoreboard's title
+
+    /** Constructs a new Interface. */
+    constructor Interface new() {
+        let scoreboard = "Score:";
+        return this;
+    }
+    
+    /** Frees memory and destroys the Interface object. */
+    method void dispose() {
+        do Memory.deAlloc(scoreboard);
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Updates the scoreboard to the given score. */
+    method void updateScore(int score) {
+        // pad the score with zeroes if necessary
+        do Output.moveCursor(0, 34);
+        if (score < 100) { do Output.printInt(0); }
+        if (score < 10)  { do Output.printInt(0); }
+        do Output.printInt(score);
+
+        return;
+    }
+
+    /** Initializes and draws the scoreboard. */
+    method void drawScoreboard() {
+        // display scoreboard in the center of the screen
+        do Output.moveCursor(0, 27);
+        do Output.printString(scoreboard);
+        do updateScore(0); // initalize score to 0
+
+        return;
+    }
+
+    /** Draws the border around the playing area.
+     *  This gives a playing area of 510x240 pixels.
+     */
+    method void drawBorder() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(0, 12, 511, 13);    // top
+        do Screen.drawRectangle(0, 12, 0, 255);     // left
+        do Screen.drawRectangle(511, 13, 511, 255); // right
+        do Screen.drawRectangle(0, 254, 511, 255);  // bottom
+        return;
+    }
+
+    /** Draws the interface's components to the screen. This method should 
+     *  only be called at the beginning of a game.
+     */
+    method void draw() {
+        do drawBorder();
+        do drawScoreboard();
+        return;
+    }
+}
