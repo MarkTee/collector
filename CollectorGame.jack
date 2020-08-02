@@ -7,7 +7,7 @@
  *  The game ends when the player collides with any of the squares marked with
  *  a circle.
  *
- *  The game can be controlled using the WASD or arrow keys.
+ *  The player's character can be controlled using the arrow keys.
  *
  *  This game was written to learn more about the Jack programming language, a
  *  custom language used in the Nand2Tetris course.
@@ -49,10 +49,10 @@ class CollectorGame {
             
             // handle valid key presses
             if (key = 81) { let running = false; } // q key
-            if (key = 87 | key = 131) { do player.move(1); }   // w/up arrow
-            if (key = 65 | key = 130) { do player.move(2); }   // a/left arrow
-            if (key = 83 | key = 133) { do player.move(3); }   // s/down arrow
-            if (key = 68 | key = 132) { do player.move(4); }   // d/right arrow     
+            if (key = 131) { do player.move(1); } // up arrow key
+            if (key = 130) { do player.move(2); } // left arrow key
+            if (key = 133) { do player.move(3); } // down arrow key
+            if (key = 132) { do player.move(4); } // right arrow key  
 
             do Sys.wait(50);
         }
