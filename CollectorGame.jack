@@ -29,8 +29,11 @@ class CollectorGame {
         // initialize an item
         let item = Item.new();
         do item.newPosition();
-
+        
+        // initialize the player character, and set their score to 0
         let player = Player.new();
+        let score = 0;
+
         return this;
     }
 
@@ -60,6 +63,14 @@ class CollectorGame {
             if (key = 130) { do player.move(2); } // left arrow key
             if (key = 133) { do player.move(3); } // down arrow key
             if (key = 132) { do player.move(4); } // right arrow key  
+
+            if ((player.getX()=item.getX()) & (player.getY()=item.getY())) {
+                // update scoreboard
+                let score = score + 1;
+                do interface.updateScore(score);
+                // generate new item position
+                do item.newPosition();
+            }
 
             do Sys.wait(50);
         }

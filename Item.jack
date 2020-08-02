@@ -27,4 +27,12 @@ class Item {
 
         return;
     }
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
 }
