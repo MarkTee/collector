@@ -16,12 +16,13 @@ class CollectorGame {
     field Interface interface;
     field Player player;
     field Item item;
-    field Enemy enemy;
+    field EnemyList enemyList;
 
     field int score; // the player's current score
     
     /** Constructs a new Collector game. */
     constructor CollectorGame new() {
+        do Random.setSeed(100);
         // initialize the game's interface
         let interface = Interface.new();
         do interface.draw();
@@ -33,8 +34,9 @@ class CollectorGame {
         // initialize the player character, and set their score to 0
         let player = Player.new();
         let score = 0;
-
-        let enemy = Enemy.new();
+        
+        // initialize the list of enemies
+        let enemyList = EnemyList.new();
 
         return this;
     }
@@ -51,6 +53,7 @@ class CollectorGame {
         var char key; // the key that's currently being pressed by the user
         var boolean running; // whether the game is running
         var int playerX, playerY; // player character's coordinates
+        var enemy newEnemy; // the new enemy to be created
         let key = 0;
         let running = true;
         
@@ -77,8 +80,11 @@ class CollectorGame {
                 // generate new item position
                 do item.newPosition();
                 // spawn an enemy
-                do enemy.spawn(playerX, playerY);
+                do enemyList.newEnemy(playerX, playerY);
             }
+
+            do enemyList.moveEnemies();
+            do item.draw();
 
             do Sys.wait(50);
         }

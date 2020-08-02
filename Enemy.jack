@@ -9,8 +9,9 @@ class Enemy {
     field int direction; // direction of enemy's movement
     
     /** Constructs a new Enemy. */
-    constructor Enemy new() {
+    constructor Enemy new(int playerX, int playerY) {
         let size = 5;
+        do spawn(playerX, playerY);
         return this;
     }
     
@@ -35,6 +36,9 @@ class Enemy {
         while (y = playerY) {
             let y = 18 + (11 * Random.randRange(21));
         }
+
+        // generate a random movement direction
+        let direction = Random.randRange(3) + 1;
 
         do draw(true);
         return;
@@ -61,7 +65,6 @@ class Enemy {
     }
 
     /** Moves the enemy in the specified direction: 
-     *  0 - stationary
      *  1 - up
      *  2 - left
      *  3 - down
@@ -74,22 +77,22 @@ class Enemy {
 
         // horizontal movement
         if (direction = 2) {
-            if (x > 8) { let x = x - 11; }
             if (x = 8) { let direction = 4; }
+            if (x > 8) { let x = x - 11; }
         }
         if (direction = 4) {
-            if (x < 503) { let x = x + 11; }
             if (x = 503) { let direction = 2; let x = x - 11; }
+            if (x < 503) { let x = x + 11; }
         }
     
         // vertical movement
         if (direction = 1) {
-            if (y > 18) { let y = y - 11; }
             if (y = 18) { let direction = 3; }
+            if (y > 18) { let y = y - 11; }
         }
         if (direction = 3) {
-            if (y < 249) { let y = y + 11; }
             if (y = 249) { let direction = 1; let y = y - 11; }
+            if (y < 249) { let y = y + 11; }
         }
         
         // draw the enemy's new position

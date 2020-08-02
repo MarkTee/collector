@@ -55,15 +55,8 @@ class Player {
         return;
     }
 
-    /** Returns the player's current x-coordinate. */
-    method int getX() {
-        return x;
-    }
-
-    /** Returns the player's current y-coordinate. */
-    method int getY() {
-        return y;
-    }
-
+    /** Return the player's current coordinates. */
+    method int getX() { return x; }
+    method int getY() { return y; } 
 }
 

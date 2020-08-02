@@ -1,0 +1,58 @@
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Implements a linked list (of Enemies).
+ */
+class EnemyList {
+    field Enemy enemy;       // the current node's Enemy
+    field EnemyList next;    // the next Enemy in the list
+    field boolean emptyList; // whether the list is currently empty
+
+    /** Constructs a new List of Enemies. */
+    constructor EnemyList new() {
+        let emptyList = true;
+        return this;
+    }
+
+    /** Frees memory and destroys the object. */
+    method void dispose() {
+        // traverse the list to delete all nodes
+        if (~(next = null)) {
+            do next.dispose();
+        }
+
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Creates a new enemy and adds it to the list. */
+    method void newEnemy(int playerX, int playerY) {
+        let emptyList = false;
+        // traverse the list to the end
+        if (~(next = null)) {
+            do next.newEnemy(playerX, playerY);
+            return;
+        }
+        let enemy = Enemy.new(playerX, playerY);
+        let next = EnemyList.new();
+        return;
+    }
+
+    method void moveEnemies() {
+        if (emptyList) {
+            return;
+        }
+
+        // traverse the list to the end
+        if (~(next = null)) {
+            do next.moveEnemies();
+        }
+        do enemy.move();
+        return;
+    }
+    
+    /** Return the node's attributes. */
+    method Enemy getEnemy() { return enemy; }
+    method EnemyList getNext() { return next;  }
+
+}
