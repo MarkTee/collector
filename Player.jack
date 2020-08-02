@@ -1,7 +1,7 @@
 /** Implements the player-controlled character. */
 class Player {
     field int x, y; // character's position
-    field int size; // character's size
+    field int size; // character's size: (size * 2) + 1
 
     constructor Player new() {
         let x = 250;

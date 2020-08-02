@@ -1,0 +1,30 @@
+/** Implements the item that the player picks up to score points. */
+class Item {
+    field int x, y; // item's position
+    field int size; // size of the item (by default, same size as the player)
+
+    constructor Item new() {
+        let size = 5;
+        return this;
+    }
+
+    method void newPosition() {
+        let x = 8 + (11 *  Random.randRange(45));
+        let y = 18 + (11 * Random.randRange(21));
+        do draw();
+        return;
+    }
+
+    method void draw() {
+        // draw the item
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x - size, y - size,
+                                x + size, y + size);
+        // hollow out the center of the item
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x - size + 2, y - size + 2,
+                                x + size - 2, y + size - 2);
+
+        return;
+    }
+}

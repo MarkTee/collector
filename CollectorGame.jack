@@ -16,12 +16,19 @@
 class CollectorGame {
     field Interface interface;
     field Player player;
+    field Item item;
+
+    field int score; // the player's current score
     
     /** Constructs a new Collector game. */
     constructor CollectorGame new() {
         // initialize the game's interface
         let interface = Interface.new();
         do interface.draw();
+
+        // initialize an item
+        let item = Item.new();
+        do item.newPosition();
 
         let player = Player.new();
         return this;
