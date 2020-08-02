@@ -4,7 +4,6 @@ class Main {
         var CollectorGame game;
         let game = CollectorGame.new();
         do game.run();
-        do game.dispose();
         return;
     }
 }

@@ -4,8 +4,8 @@ class Player {
     field int size; // character's size
 
     constructor Player new() {
-        let x = 100;
-        let y = 100;
+        let x = 19;
+        let y = 29;
         let size = 5;
         return this;
     }
@@ -21,6 +21,34 @@ class Player {
         do Screen.setColor(color);
         do Screen.drawRectangle(x - size, y - size,
                                 x + size, y + size);
+        return;
+    }
+    
+    /** Moves the player in the specified direction: 
+     *  0 - stationary
+     *  1 - up
+     *  2 - left
+     *  3 - down
+     *  4 - right
+    */
+
+    /* Moves the character across the screen.
+     * Movement occurs on a grid, and stays within the border. 
+     */
+    method void move(int direction) {
+        // erase the player's old position
+        do draw(false);
+
+        // horizontal movement
+        if (direction = 2) { if (x > 8) { let x = x - 11; }}
+        if (direction = 4) { if (x < 503) { let x = x + 11; }}
+    
+        // vertical movement
+        if (direction = 1) { if (y > 18) { let y = y - 11; }}
+        if (direction = 3) { if (y < 249) { let y = y + 11; }}
+        
+        // draw the player's new position
+        do draw(true);
         return;
     }
 

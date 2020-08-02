@@ -37,15 +37,26 @@ class CollectorGame {
     /** Allows the game to run. */
     method void run() {
         var char key; // the key that's currently being pressed by the user
+        var boolean running; // whether the game is running
+        let key = 0;
+        let running = true;
+        
+        do player.draw(true);
 
         // main game loop
-        while (true) {
-            let key = Keyboard.keyPressed();
-            if (key = 81) { return; } // q key
+        while (running) {
+           let key = Keyboard.keyPressed();
+            
+            // handle valid key presses
+            if (key = 81) { let running = false; } // q key
+            if (key = 87 | key = 131) { do player.move(1); }   // w/up arrow
+            if (key = 65 | key = 130) { do player.move(2); }   // a/left arrow
+            if (key = 83 | key = 133) { do player.move(3); }   // s/down arrow
+            if (key = 68 | key = 132) { do player.move(4); }   // d/right arrow     
 
-            do player.draw(true);
+            do Sys.wait(50);
         }
-
+        do dispose();
         return;
     }
  }
