@@ -4,8 +4,8 @@ class Player {
     field int size; // character's size
 
     constructor Player new() {
-        let x = 19;
-        let y = 29;
+        let x = 250;
+        let y = 128;
         let size = 5;
         return this;
     }

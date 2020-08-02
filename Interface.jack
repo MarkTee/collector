@@ -39,7 +39,7 @@ class Interface {
     }
 
     /** Draws the border around the playing area.
-     *  This gives a playing area of 510x240 506x242 pixels.
+     *  This gives a playing area of 506x242 pixels.
      */
     method void drawBorder() {
         do Screen.setColor(true);
