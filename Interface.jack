@@ -1,4 +1,7 @@
-/** Implements the user interface. This includes the score and the borders that
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Implements the user interface. This includes the score and the borders that
  *  surround the playing area.
  */
 class Interface {

@@ -1,4 +1,8 @@
-/** Initializes and starts the game. */
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Initializes and starts the game. 
+ */
 class Main {
     function void main() {
         var CollectorGame game;

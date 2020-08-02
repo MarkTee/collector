@@ -1,11 +1,10 @@
 /** Collector - by Mark Thomas
  *  https://github.com/marktee
  * 
- *  The goal of the game is to collect as many of the hollow squares as 
+ *  The goal of the game is to collect as many of the items (hollow squares) as 
  *  possible.
  *
- *  The game ends when the player collides with any of the squares marked with
- *  a circle.
+ *  The game ends when the player collides with any of the circular enemies.
  *
  *  The player's character can be controlled using the arrow keys.
  *
@@ -51,6 +50,7 @@ class CollectorGame {
     method void run() {
         var char key; // the key that's currently being pressed by the user
         var boolean running; // whether the game is running
+        var int playerX, playerY; // player character's coordinates
         let key = 0;
         let running = true;
         
@@ -67,14 +67,17 @@ class CollectorGame {
             if (key = 133) { do player.move(3); } // down arrow key
             if (key = 132) { do player.move(4); } // right arrow key  
 
-            if ((player.getX()=item.getX()) & (player.getY()=item.getY())) {
+            let playerX = player.getX();
+            let playerY = player.getY();
+
+            if ((playerX = item.getX()) & (playerY = item.getY())) {
                 // update scoreboard
                 let score = score + 1;
                 do interface.updateScore(score);
                 // generate new item position
                 do item.newPosition();
                 // spawn an enemy
-                do enemy.spawn();
+                do enemy.spawn(playerX, playerY);
             }
 
             do Sys.wait(50);

@@ -1,7 +1,12 @@
-/** Implements the enemies that the player must avoid. */
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Implements the enemies that the player must avoid. 
+ */
 class Enemy {
     field int x, y; // enemy's position
     field int size; // size of the enemy (by default, same size as the player)
+    field int direction; // direction of enemy's movement
     
     /** Constructs a new Enemy. */
     constructor Enemy new() {
@@ -51,6 +56,44 @@ class Enemy {
         do Screen.drawCircle(x, y, 4);
         do Screen.setColor(true);
         do Screen.drawCircle(x, y, 3);
+
+        return;
+    }
+
+    /** Moves the enemy in the specified direction: 
+     *  0 - stationary
+     *  1 - up
+     *  2 - left
+     *  3 - down
+     *  4 - right
+     *  Movement occurs on a grid, and stays within the border. 
+     */
+    method void move() {
+        // erase the enemy's old position
+        do draw(false);
+
+        // horizontal movement
+        if (direction = 2) {
+            if (x > 8) { let x = x - 11; }
+            if (x = 8) { let direction = 4; }
+        }
+        if (direction = 4) {
+            if (x < 503) { let x = x + 11; }
+            if (x = 503) { let direction = 2; let x = x - 11; }
+        }
+    
+        // vertical movement
+        if (direction = 1) {
+            if (y > 18) { let y = y - 11; }
+            if (y = 18) { let direction = 3; }
+        }
+        if (direction = 3) {
+            if (y < 249) { let y = y + 11; }
+            if (y = 249) { let direction = 1; let y = y - 11; }
+        }
+        
+        // draw the enemy's new position
+        do draw(true);
 
         return;
     }

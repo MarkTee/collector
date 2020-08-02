@@ -1,4 +1,8 @@
-/** Implements the item that the player picks up to score points. */
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Implements the item that the player picks up to score points.
+ */
 class Item {
     field int x, y; // item's position
     field int size; // size of the item (by default, same size as the player)

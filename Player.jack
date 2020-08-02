@@ -1,4 +1,8 @@
-/** Implements the player-controlled character. */
+/** Collector - by Mark Thomas
+ *  https://github.com/marktee
+ *
+ *  Implements the player-controlled character. 
+ */
 class Player {
     field int x, y; // character's position
     field int size; // character's size: (size * 2) + 1
@@ -31,10 +35,7 @@ class Player {
      *  2 - left
      *  3 - down
      *  4 - right
-    */
-
-    /* Moves the character across the screen.
-     * Movement occurs on a grid, and stays within the border. 
+     *  Movement occurs on a grid, and stays within the border. 
      */
     method void move(int direction) {
         // erase the player's old position
@@ -50,6 +51,7 @@ class Player {
         
         // draw the player's new position
         do draw(true);
+
         return;
     }
 
