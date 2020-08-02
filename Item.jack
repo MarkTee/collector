@@ -3,11 +3,19 @@ class Item {
     field int x, y; // item's position
     field int size; // size of the item (by default, same size as the player)
 
+    /** Constructs a new Item. */
     constructor Item new() {
         let size = 5;
         return this;
     }
 
+    /** Frees memory and destroys the object. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Places the item at a new position on the screen. */
     method void newPosition() {
         let x = 8 + (11 *  Random.randRange(45));
         let y = 18 + (11 * Random.randRange(21));
@@ -15,6 +23,7 @@ class Item {
         return;
     }
 
+    /** Draws the item. */
     method void draw() {
         // draw the item
         do Screen.setColor(true);
@@ -28,10 +37,12 @@ class Item {
         return;
     }
 
+    /** Returns the item's current x-coordinate. */
     method int getX() {
         return x;
     }
 
+    /** Returns the item's current y-coordinate. */
     method int getY() {
         return y;
     }
