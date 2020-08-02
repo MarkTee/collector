@@ -1,0 +1,57 @@
+/** Implements the enemies that the player must avoid. */
+class Enemy {
+    field int x, y; // enemy's position
+    field int size; // size of the enemy (by default, same size as the player)
+    
+    /** Constructs a new Enemy. */
+    constructor Enemy new() {
+        let size = 5;
+        return this;
+    }
+    
+    /** Frees memory and destroys the object. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+    /** Spawns the enemy to a random location on the screen. 
+     *  Never spawns the enemy in the same column or row that the player is
+     *  currently occupying.
+     */
+    method void spawn(int playerX, int playerY) {
+        let x = playerX;
+        let y = playerY;
+        
+        // ensure the enemy spawns in a unique column and row
+        while (x = playerX) {
+            let x = 8 + (11 *  Random.randRange(45));
+        }
+        while (y = playerY) {
+            let y = 18 + (11 * Random.randRange(21));
+        }
+
+        do draw(true);
+        return;
+    }
+
+    /** Draws the enemy. */
+    method void draw(boolean color) {
+        // if the item is being erased, don't do anything else
+        if (~(color)) {
+            do Screen.setColor(false); 
+            do Screen.drawCircle(x, y, 5);
+            return;
+        }
+
+        // draw the enemy
+        do Screen.setColor(true);
+        do Screen.drawCircle(x, y, 5);
+        do Screen.setColor(false);
+        do Screen.drawCircle(x, y, 4);
+        do Screen.setColor(true);
+        do Screen.drawCircle(x, y, 3);
+
+        return;
+    }
+}

@@ -17,6 +17,7 @@ class CollectorGame {
     field Interface interface;
     field Player player;
     field Item item;
+    field Enemy enemy;
 
     field int score; // the player's current score
     
@@ -33,6 +34,8 @@ class CollectorGame {
         // initialize the player character, and set their score to 0
         let player = Player.new();
         let score = 0;
+
+        let enemy = Enemy.new();
 
         return this;
     }
@@ -70,6 +73,8 @@ class CollectorGame {
                 do interface.updateScore(score);
                 // generate new item position
                 do item.newPosition();
+                // spawn an enemy
+                do enemy.spawn();
             }
 
             do Sys.wait(50);
