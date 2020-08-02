@@ -1,0 +1,28 @@
+/** Implements the player-controlled character. */
+class Player {
+    field int x, y; // character's position
+    field int size; // character's size
+
+    constructor Player new() {
+        let x = 100;
+        let y = 100;
+        let size = 5;
+        return this;
+    }
+
+    /* Frees memory and destroys the object. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+    /* Draws the character. */
+    method void draw(boolean color) {
+        do Screen.setColor(color);
+        do Screen.drawRectangle(x - size, y - size,
+                                x + size, y + size);
+        return;
+    }
+
+}
+

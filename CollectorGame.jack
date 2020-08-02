@@ -15,11 +15,15 @@
  */
 class CollectorGame {
     field Interface interface;
+    field Player player;
     
     /** Constructs a new Collector game. */
     constructor CollectorGame new() {
+        // initialize the game's interface
         let interface = Interface.new();
         do interface.draw();
+
+        let player = Player.new();
         return this;
     }
 
@@ -38,6 +42,8 @@ class CollectorGame {
         while (true) {
             let key = Keyboard.keyPressed();
             if (key = 81) { return; } // q key
+
+            do player.draw(true);
         }
 
         return;

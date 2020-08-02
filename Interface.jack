@@ -16,24 +16,24 @@ class Interface {
         do Memory.deAlloc(this);
         return;
     }
-
-    /** Updates the scoreboard to the given score. */
-    method void updateScore(int score) {
-        // pad the score with zeroes if necessary
-        do Output.moveCursor(0, 34);
-        if (score < 100) { do Output.printInt(0); }
-        if (score < 10)  { do Output.printInt(0); }
-        do Output.printInt(score);
-
-        return;
-    }
-
+    
     /** Initializes and draws the scoreboard. */
     method void drawScoreboard() {
         // display scoreboard in the center of the screen
         do Output.moveCursor(0, 27);
         do Output.printString(scoreboard);
         do updateScore(0); // initalize score to 0
+
+        return;
+    }
+    
+    /** Updates the scoreboard to the specified score. */
+    method void updateScore(int score) {
+        // pad the score with zeroes if necessary
+        do Output.moveCursor(0, 34);
+        if (score < 100) { do Output.printInt(0); }
+        if (score < 10)  { do Output.printInt(0); }
+        do Output.printInt(score);
 
         return;
     }
@@ -58,4 +58,5 @@ class Interface {
         do drawScoreboard();
         return;
     }
+
 }
