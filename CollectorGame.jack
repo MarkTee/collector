@@ -120,15 +120,22 @@ class CollectorGame {
     method void run() {
         var char key; // the key that's currently being pressed by the user
         var int playerX, playerY; // player character's coordinates
+        var int seed; // seed for the random number generator
+        let seed = 0;
 
         // show splash screen
         let key = 0;
         do interface.drawSplashScreen();
+        
 
         // wait until the player presses a key to start the game
         while (key = 0) {
             let key = Keyboard.keyPressed();
+            let seed = seed + 1;
         }    
+        
+        // seed random number generator
+        do Random.setSeed(seed);
         
         // initialize game
         do interface.erasePlayArea();
