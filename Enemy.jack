@@ -22,14 +22,15 @@ class Enemy {
     }
     
     /** Spawns the enemy to a random location on the screen. 
-     *  Never spawns the enemy in the same column or row that the player is
-     *  currently occupying.
+     *  To help prevent "cheap deaths", never spawn the enemy in the same 
+     *  column or row as the player.
      */
     method void spawn(int playerX, int playerY) {
         let x = playerX;
         let y = playerY;
         
-        // ensure the enemy spawns in a unique column and row
+        // ensure the enemy spawns in a unique column and row, and within
+        // the confines of the play area
         while (x = playerX) {
             let x = 8 + (11 *  Random.randRange(45));
         }
@@ -37,16 +38,18 @@ class Enemy {
             let y = 18 + (11 * Random.randRange(21));
         }
 
-        // generate a random movement direction
+        // generate a random movement direction for the enemy
         let direction = Random.randRange(3) + 1;
+        
+        do draw(true); // draw the enemy at the generated location
 
-        do draw(true);
+
         return;
     }
 
     /** Draws the enemy. */
     method void draw(boolean color) {
-        // if the item is being erased, don't do anything else
+        // erase the enemy
         if (~(color)) {
             do Screen.setColor(false); 
             do Screen.drawCircle(x, y, 5);
@@ -69,11 +72,16 @@ class Enemy {
      *  2 - left
      *  3 - down
      *  4 - right
-     *  Movement occurs on a grid, and stays within the border. 
+     *  Movement occurs on a grid, and stays within the playing area. If the
+     *  enemy collides with a wall, it will "bounce off", reversing direction.
+     *
+     *  Returns whether the player has collided with the enemy.
      */
-    method void move() {
-        // erase the enemy's old position
-        do draw(false);
+    method boolean move(int playerX, int playerY) {
+        // check if the player has moved into the enemy
+        if (hasCollided(playerX, playerY)) { return true; }
+
+        do draw(false); // erase the enemy's old position
 
         // horizontal movement
         if (direction = 2) {
@@ -95,9 +103,18 @@ class Enemy {
             if (y < 249) { let y = y + 11; }
         }
         
-        // draw the enemy's new position
-        do draw(true);
+        // check if the enemy has moved into the player
+        if (hasCollided(playerX, playerY)) { return true; }
 
-        return;
+        do draw(true); // draw the enemy's new position
+        return false; // the enemy didn't collide with the player
     }
+    
+    /** Returns whether a collision has occurred between the enemy and the
+     *  player.
+     */
+    method boolean hasCollided(int playerX, int playerY) {
+        return ((x = playerX) & (y = playerY));
+    }
+
 }

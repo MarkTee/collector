@@ -8,7 +8,8 @@ class Main {
     function void main() {
         var CollectorGame game;
         let game = CollectorGame.new();
-        do game.dispose();
+        do game.run();
+        do game.dispose(); // cleanup
         return;
     }
 
