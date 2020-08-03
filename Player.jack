@@ -1,7 +1,7 @@
 /** Collector - by Mark Thomas
  *  https://github.com/marktee
  *
- *  Implements the player-controlled character. 
+ *  Implements the player-controlled character.
  */
 class Player {
     field int x, y; // character's position
@@ -21,7 +21,7 @@ class Player {
         do Memory.deAlloc(this);
         return;
     }
-    
+
     /** Draws the character. */
     method void draw(boolean color) {
         do Screen.setColor(color);
@@ -29,13 +29,13 @@ class Player {
                                 x + size, y + size);
         return;
     }
-    
-    /** Moves the player in the specified direction: 
+
+    /** Moves the player in the specified direction:
      *  1 - up
      *  2 - left
      *  3 - down
      *  4 - right
-     *  Movement occurs on a grid, and stays within the border. 
+     *  Movement occurs on a grid, and stays within the border.
      */
     method void move(int direction) {
         // erase the player's old position
@@ -44,11 +44,11 @@ class Player {
         // horizontal movement
         if (direction = 2) { if (x > 8) { let x = x - 11; }}   // left
         if (direction = 4) { if (x < 503) { let x = x + 11; }} // right
-    
+
         // vertical movement
         if (direction = 1) { if (y > 18) { let y = y - 11; }}  // up
         if (direction = 3) { if (y < 249) { let y = y + 11; }} // down
-        
+
         // draw the player's new position
         do draw(true);
 
@@ -57,6 +57,6 @@ class Player {
 
     /** Return the player's current coordinates. */
     method int getX() { return x; }
-    method int getY() { return y; } 
+    method int getY() { return y; }
 
 }

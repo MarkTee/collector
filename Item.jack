@@ -18,7 +18,7 @@ class Item {
         do Memory.deAlloc(this);
         return;
     }
-    
+
     /** Draws the item. */
     method void draw() {
         // draw the item

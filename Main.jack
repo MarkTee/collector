@@ -1,7 +1,7 @@
 /** Collector - by Mark Thomas
  *  https://github.com/marktee
  *
- *  Initializes and starts the game. 
+ *  Initializes and starts the game.
  */
 class Main {
 

@@ -1,7 +1,7 @@
 /** Collector - by Mark Thomas
  *  https://github.com/marktee
- * 
- *  The goal of the game is to collect as many of the items (hollow squares) as 
+ *
+ *  The goal of the game is to collect as many of the items (hollow squares) as
  *  possible.
  *
  *  The game ends when the player collides with any of the circular enemies.
@@ -21,25 +21,25 @@ class CollectorGame {
     field Player player;
 
     field int score; // the player's current score
-    
+
     /** Constructs a new Collector game. */
     constructor CollectorGame new() {
         // initialize the game's interface
         let interface = Interface.new();
-        
+
         // initialize the player character, and set their score to 0
         let player = Player.new();
         let score = 0;
 
         // initialize the item
         let item = Item.new();
-                
+
         // initialize the list of enemies (which is empty at start)
         let enemyList = EnemyList.new();
 
         return this;
     }
-    
+
     /** Frees memory and destroys all objects used by CollectorGame. */
     method void disposeObjects() {
         do enemyList.dispose();
@@ -74,10 +74,10 @@ class CollectorGame {
         do item.newPosition();
 
         let enemyList = EnemyList.new();
-        
+
         return;
     }
-    
+
     /** Handles the player getting an item. Performs the following actions:
      *  - updates score
      *  - places the item somewhere else
@@ -90,10 +90,10 @@ class CollectorGame {
 
         // generate new item position
         do item.newPosition();
- 
+
         // spawn a new enemy
         do enemyList.newEnemy(playerX, playerY);
-        
+
         return;
     }
 
@@ -115,7 +115,7 @@ class CollectorGame {
 
         return false; // statement required by Jack compiler
     }
-    
+
     /** Displays the splash screen. After the user presses a key, sets up
      *  and starts the game.
      */
@@ -132,11 +132,11 @@ class CollectorGame {
         while (key = 0) {
             let key = Keyboard.keyPressed();
             let seed = seed + 1;
-        }    
-        
+        }
+
         // seed random number generator
         do Random.setSeed(seed);
-        
+
         // initialize game
         do interface.erasePlayArea();
         do interface.draw();
@@ -145,33 +145,32 @@ class CollectorGame {
         return;
     }
 
-
     /** Starts the actual game. */
     method void run() {
         var char key; // the key that's currently being pressed by the user
         var int playerX, playerY; // player character's coordinates
 
         do splashScreen();
-        
+
         // main game loop
         while (true) {
             let key = Keyboard.keyPressed();
-            
+
             // handle movement
             if (key = 131) { do player.move(1); } // up arrow key
             if (key = 130) { do player.move(2); } // left arrow key
             if (key = 133) { do player.move(3); } // down arrow key
-            if (key = 132) { do player.move(4); } // right arrow key  
-            
+            if (key = 132) { do player.move(4); } // right arrow key
+
             // get player's new position
             let playerX = player.getX();
             let playerY = player.getY();
-            
+
             // handle player getting the item
             if ((playerX = item.getX()) & (playerY = item.getY())) {
-                do getItem(playerX, playerY); 
+                do getItem(playerX, playerY);
             }
-            
+
             if (score > 0) {
                 // if the player collided with an enemy, ask them if they'd
                 // like to quit, or if they'd like to play again
@@ -180,7 +179,7 @@ class CollectorGame {
                     do resetGame();               // reset the game
                 }
             }
-            
+
             do item.draw();  // redraw the item in case an enemy moved over it
 
             do Sys.wait(50); // wait 50ms

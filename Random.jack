@@ -1,12 +1,12 @@
 // Copyright 2012 Mark Armbrust. Permission granted for educational use.
 //
-// Source: 
+// Source:
 // http://nand2tetris-questions-and-answers-forum.32033.n3.nabble.com/Random-number-generator-for-hack-cpu-td4025505.html
 
 /** Random.jack -- A not so random PRNG. */
 class Random {
     static int seed;
-    
+
     function void setSeed(int newSeed) {
         let seed = newSeed;
         return;

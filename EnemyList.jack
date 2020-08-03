@@ -20,8 +20,8 @@ class EnemyList {
         if (~(next = null)) {
             do next.dispose();
         }
-        
-        if (~(enemy = null)) { 
+
+        if (~(enemy = null)) {
             do enemy.dispose();
         }
         do Memory.deAlloc(this);
@@ -35,7 +35,7 @@ class EnemyList {
             do next.newEnemy(playerX, playerY);
             return;
         }
-        
+
         // create a new enemy, and append an empty node to the end of the list
         let enemy = Enemy.new(playerX, playerY);
         let next = EnemyList.new();
@@ -57,8 +57,8 @@ class EnemyList {
             let collided = next.moveEnemies(playerX, playerY);
             if (collided) { return true; }
         }
-        
-        // if we're at the last node (which should be empty) 
+
+        // if we're at the last node (which should be empty)
         if (enemy = null) {
             return false;
         }
@@ -67,5 +67,5 @@ class EnemyList {
         let collided = enemy.move(playerX, playerY);
         return collided;
     }
-    
+
 }

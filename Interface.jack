@@ -16,7 +16,7 @@ class Interface {
         let playAgainPrompt = "Play Again? Y/N";
         return this;
     }
-    
+
     /** Frees memory and destroys the Interface object. */
     method void dispose() {
         do Memory.deAlloc(scoreboardText);
@@ -25,40 +25,44 @@ class Interface {
         do Memory.deAlloc(this);
         return;
     }
-    
+
     /** Draws the splash screen, which the player sees immediately upon
      *  starting the game.
      */
     method void drawSplashScreen() {
         // initialize text
-        var String line1, line2, line3, line4, line5, line6;
+        var String line1, line2, line3, line4, line5, line6, line7;
         let line1 = "Collector";
-        let line2 = "by Mark Thomas (https://github.com/MarkTee/)";
-        let line3 = "Collect the hollow squares to earn points.";
-        let line4 = "Avoid the circles; if you touch one, you lose!";
-        let line5 = "Use the arrow keys to move.";
-        let line6 = "Press any key to start.";
-    
+        let line2 = "by Mark Thomas";
+        let line3 = "https://github.com/MarkTee/";
+        let line4 = "Collect the hollow squares to earn points.";
+        let line5 = "Avoid the circles; if you touch one, you lose!";
+        let line6 = "Use the arrow keys to move.";
+        let line7 = "Press any key to start.";
+
         // print lines
         do Screen.setColor(true);
 
         do Output.moveCursor(7, 28);
         do Output.printString(line1);
 
-        do Output.moveCursor(8, 10);
+        do Output.moveCursor(8, 25);
         do Output.printString(line2);
 
-        do Output.moveCursor(10, 11);
+        do Output.moveCursor(9, 19);
         do Output.printString(line3);
 
-        do Output.moveCursor(11, 9);
+        do Output.moveCursor(11, 11);
         do Output.printString(line4);
-       
-        do Output.moveCursor(13, 19);
+
+        do Output.moveCursor(12, 9);
         do Output.printString(line5);
 
-        do Output.moveCursor(15, 21);
+        do Output.moveCursor(14, 19);
         do Output.printString(line6);
+
+        do Output.moveCursor(16, 21);
+        do Output.printString(line7);
 
         // deallocate strings
         do Memory.deAlloc(line1);
@@ -70,7 +74,7 @@ class Interface {
 
         return;
     }
-    
+
     /** Initializes and draws the scoreboard. */
     method void drawScoreboard() {
         // display scoreboard in the center of the screen
@@ -79,7 +83,7 @@ class Interface {
         do updateScore(0); // initalize score to 0
         return;
     }
-    
+
     /** Updates the scoreboard to the specified score. */
     method void updateScore(int score) {
         // pad the score with zeroes if necessary
@@ -119,7 +123,7 @@ class Interface {
         return;
     }
 
-    /** Draws the interface's components to the screen. This method should 
+    /** Draws the interface's components to the screen. This method should
      *  only be called at the beginning of a game.
      */
     method void draw() {

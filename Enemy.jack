@@ -1,34 +1,34 @@
 /** Collector - by Mark Thomas
  *  https://github.com/marktee
  *
- *  Implements the enemies that the player must avoid. 
+ *  Implements the enemies that the player must avoid.
  */
 class Enemy {
     field int x, y; // enemy's position
     field int size; // size of the enemy (by default, same size as the player)
     field int direction; // direction of enemy's movement
-    
+
     /** Constructs a new Enemy. */
     constructor Enemy new(int playerX, int playerY) {
         let size = 5;
         do spawn(playerX, playerY);
         return this;
     }
-    
+
     /** Frees memory and destroys the object. */
     method void dispose() {
         do Memory.deAlloc(this);
         return;
     }
-    
-    /** Spawns the enemy to a random location on the screen. 
-     *  To help prevent "cheap deaths", never spawn the enemy in the same 
+
+    /** Spawns the enemy to a random location on the screen.
+     *  To help prevent "cheap deaths", never spawn the enemy in the same
      *  column or row as the player.
      */
     method void spawn(int playerX, int playerY) {
         let x = playerX;
         let y = playerY;
-        
+
         // ensure the enemy spawns in a unique column and row, and within
         // the confines of the play area
         while (x = playerX) {
@@ -40,7 +40,7 @@ class Enemy {
 
         // generate a random movement direction for the enemy
         let direction = Random.randRange(3) + 1;
-        
+
         do draw(true); // draw the enemy at the generated location
 
         return;
@@ -50,7 +50,7 @@ class Enemy {
     method void draw(boolean color) {
         // erase the enemy
         if (~(color)) {
-            do Screen.setColor(false); 
+            do Screen.setColor(false);
             do Screen.drawCircle(x, y, 5);
             return;
         }
@@ -66,7 +66,7 @@ class Enemy {
         return;
     }
 
-    /** Moves the enemy in the specified direction: 
+    /** Moves the enemy in the specified direction:
      *  1 - up
      *  2 - left
      *  3 - down
@@ -91,7 +91,7 @@ class Enemy {
             if (x = 503) { let direction = 2; let x = x - 11; }
             if (x < 503) { let x = x + 11; }
         }
-    
+
         // vertical movement
         if (direction = 1) {
             if (y = 18) { let direction = 3; }
@@ -101,14 +101,14 @@ class Enemy {
             if (y = 249) { let direction = 1; let y = y - 11; }
             if (y < 249) { let y = y + 11; }
         }
-        
+
         // check if the enemy has moved into the player
         if (hasCollided(playerX, playerY)) { return true; }
 
         do draw(true); // draw the enemy's new position
         return false; // the enemy didn't collide with the player
     }
-    
+
     /** Returns whether a collision has occurred between the enemy and the
      *  player.
      */
