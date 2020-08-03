@@ -24,5 +24,5 @@ full-speed.
 6. Press F5.
 
 ## About
-Jack is a small custom language designed for the Nand2Tetris course. This game 
-was written to learn more about Jack before writing a compiler for it.
+This game was written to learn more about Jack (a small custom language 
+designed for the Nand2Tetris course) before writing a compiler for it.
