@@ -43,7 +43,6 @@ class Enemy {
         
         do draw(true); // draw the enemy at the generated location
 
-
         return;
     }
 

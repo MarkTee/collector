@@ -5,12 +5,11 @@
  */
 class EnemyList {
     field Enemy enemy;       // the current node's Enemy
-    field EnemyList next;    // the next Enemy in the list
-    field boolean emptyList; // whether the list is currently empty
+    field EnemyList next;    // the next node in the list
 
     /** Constructs a new List of Enemies. */
     constructor EnemyList new() {
-        let emptyList = true;
+        let enemy = null;
         return this;
     }
 
@@ -20,39 +19,50 @@ class EnemyList {
         if (~(next = null)) {
             do next.dispose();
         }
-
+        
+        do Memory.deAlloc(enemy);
         do Memory.deAlloc(this);
         return;
     }
 
     /** Creates a new enemy and adds it to the list. */
     method void newEnemy(int playerX, int playerY) {
-        let emptyList = false;
         // traverse the list to the end
         if (~(next = null)) {
             do next.newEnemy(playerX, playerY);
             return;
         }
+        
+        // create a new enemy, and append an empty node to the end of the list
         let enemy = Enemy.new(playerX, playerY);
         let next = EnemyList.new();
         return;
     }
 
-    method void moveEnemies() {
-        if (emptyList) {
-            return;
-        }
+    /** Moves all enemies and checks whether any of them have collided with
+     *  the player.
+     *
+     *  Returns true if any enemy has collided with the player.
+     *  Otherwise, returns false.
+     */
+    method boolean moveEnemies(int playerX, int playerY) {
+        var boolean collided; // whether any enemy has collided
+        let collided = false;
 
         // traverse the list to the end
         if (~(next = null)) {
-            do next.moveEnemies();
+            let collided = next.moveEnemies(playerX, playerY);
+            if (collided) { return true; }
         }
-        do enemy.move();
-        return;
+        
+        // if we're at the last node (which should be empty) 
+        if (enemy = null) {
+            return false;
+        }
+
+        // move the enemy and check if they've collided with the player
+        let collided = enemy.move(playerX, playerY);
+        return collided;
     }
     
-    /** Return the node's attributes. */
-    method Enemy getEnemy() { return enemy; }
-    method EnemyList getNext() { return next;  }
-
 }
