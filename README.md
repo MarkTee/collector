@@ -1,4 +1,5 @@
 # Collector
+![Screenshot of Collector](/screenshot.png?raw=true)
 Collector is a small game implemented in the Jack programming language.
 
 The goal of the game is to collect as many of the items (the hollow squares) as 
@@ -17,6 +18,10 @@ the following steps to run the game:
 3. In the emulator, click `File -> Load Script` and select the directory
 containing the compiled .vm files.
 4. Click "Yes" when asked if you'd like to use the built-in OS functions.
-5. In the top toolbar, use the "Animate" drop-down menu to select "No
-Animation".
+5. Click `View -> Animate -> No Animation` to ensure the game runs at
+full-speed.
 6. Press F5.
+
+## About
+Jack is a small custom language designed for the Nand2Tetris course. This game 
+was written to learn more about Jack before writing a compiler for it.
