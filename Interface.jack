@@ -5,17 +5,23 @@
  *  surround the playing area.
  */
 class Interface {
-    field String scoreboard; // the scoreboard's title
+    field String scoreboardText;
+    field String gameOverText;
+    field String playAgainPrompt;
 
     /** Constructs a new Interface. */
     constructor Interface new() {
-        let scoreboard = "Score:";
+        let scoreboardText = "Score:";
+        let gameOverText = "Game Over";
+        let playAgainPrompt = "Play Again? Y/N";
         return this;
     }
     
     /** Frees memory and destroys the Interface object. */
     method void dispose() {
-        do Memory.deAlloc(scoreboard);
+        do Memory.deAlloc(scoreboardText);
+        do Memory.deAlloc(gameOverText);
+        do Memory.deAlloc(playAgainPrompt);
         do Memory.deAlloc(this);
         return;
     }
@@ -24,9 +30,8 @@ class Interface {
     method void drawScoreboard() {
         // display scoreboard in the center of the screen
         do Output.moveCursor(0, 27);
-        do Output.printString(scoreboard);
+        do Output.printString(scoreboardText);
         do updateScore(0); // initalize score to 0
-
         return;
     }
     
@@ -37,7 +42,6 @@ class Interface {
         if (score < 100) { do Output.printInt(0); }
         if (score < 10)  { do Output.printInt(0); }
         do Output.printInt(score);
-
         return;
     }
 
@@ -53,10 +57,27 @@ class Interface {
         return;
     }
 
+    /** Erases all images in the play area. */
+    method void erasePlayArea() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(3, 13, 508, 254);
+    }
+
+    /** Draws the Game Over screen. */
+    method void drawGameOver() {
+        do erasePlayArea();
+        do Output.moveCursor(10, 27);
+        do Output.printString(gameOverText);
+        do Output.moveCursor(12, 24);
+        do Output.printString(playAgainPrompt);
+        return;
+    }
+
     /** Draws the interface's components to the screen. This method should 
      *  only be called at the beginning of a game.
      */
     method void draw() {
+        var char key;
         do drawBorder();
         do drawScoreboard();
         return;
