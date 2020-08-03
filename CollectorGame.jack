@@ -42,14 +42,42 @@ class CollectorGame {
 
         return this;
     }
+    
+    /** Frees memory and destroys all objects used by CollectorGame. */
+    method void disposeObjects() {
+        do enemyList.dispose();
+        do interface.dispose();
+        do item.dispose();
+        do player.dispose();
+        return;
+    }
 
-    /** Frees memory and destroys the object. */
+    /** Frees memory and destroys all objects. */
     method void dispose() {
-        do Memory.deAlloc(enemyList);
-        do Memory.deAlloc(interface);
-        do Memory.deAlloc(item);
-        do Memory.deAlloc(player);
+        do disposeObjects();
         do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Resets the game if the player chooses to play again after losing. */
+    method void resetGame() {
+        // dispose of old objects
+        do disposeObjects();
+
+        // reinitialize new objects
+        let interface = Interface.new();
+        do interface.draw();
+        do interface.erasePlayArea();
+
+        let player = Player.new();
+        do player.draw(true);
+        let score = 0;
+
+        let item = Item.new();
+        do item.newPosition();
+
+        let enemyList = EnemyList.new();
+        
         return;
     }
     
@@ -81,21 +109,20 @@ class CollectorGame {
     method boolean shouldQuit() {
         var char key; // the key that's currently being pressed by the user
         do interface.drawGameOver();
+
         while (true) {
             let key = Keyboard.keyPressed();
             if (key = 78) { return true; }
             if (key = 89) { return false; }
         }
-        return false; // statement required by Jack compiler
 
+        return false; // statement required by Jack compiler
     }
 
     /** Allows the game to run. */
     method void run() {
         var char key; // the key that's currently being pressed by the user
         var int playerX, playerY; // player character's coordinates
-        var enemy newEnemy; // the new enemy to be created
-        
 
         // main game loop
         while (true) {
@@ -120,13 +147,14 @@ class CollectorGame {
                 // if the player collided with an enemy, ask them if they'd
                 // like to quit, or if they'd like to play again
                 if (enemyList.moveEnemies(playerX, playerY)) {
-                    if (shouldQuit()) { return; }
+                    if (shouldQuit()) { return; } // quit the game
+                    do resetGame();               // reset the game
                 }
             }
             
-            do item.draw();
+            do item.draw();  // redraw the item in case an enemy moved over it
 
-            do Sys.wait(50);
+            do Sys.wait(50); // wait 50ms
         }
         return; // statement required by Jack compiler
     }

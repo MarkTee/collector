@@ -10,6 +10,7 @@ class EnemyList {
     /** Constructs a new List of Enemies. */
     constructor EnemyList new() {
         let enemy = null;
+        let next = null;
         return this;
     }
 
@@ -20,7 +21,9 @@ class EnemyList {
             do next.dispose();
         }
         
-        do Memory.deAlloc(enemy);
+        if (~(enemy = null)) { 
+            do enemy.dispose();
+        }
         do Memory.deAlloc(this);
         return;
     }
