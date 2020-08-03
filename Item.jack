@@ -18,6 +18,21 @@ class Item {
         do Memory.deAlloc(this);
         return;
     }
+    
+    /** Draws the item. */
+    method void draw() {
+        // draw the item
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x - size, y - size,
+                                x + size, y + size);
+
+        // hollow out the center of the item
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x - size + 2, y - size + 2,
+                                x + size - 2, y + size - 2);
+
+        return;
+    }
 
     /** Places the item at a new position on the screen. */
     method void newPosition() {
@@ -27,27 +42,7 @@ class Item {
         return;
     }
 
-    /** Draws the item. */
-    method void draw() {
-        // draw the item
-        do Screen.setColor(true);
-        do Screen.drawRectangle(x - size, y - size,
-                                x + size, y + size);
-        // hollow out the center of the item
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x - size + 2, y - size + 2,
-                                x + size - 2, y + size - 2);
-
-        return;
-    }
-
-    /** Returns the item's current x-coordinate. */
-    method int getX() {
-        return x;
-    }
-
-    /** Returns the item's current y-coordinate. */
-    method int getY() {
-        return y;
-    }
+    /** Return the item's current coordinates. */
+    method int getX() { return x; }
+    method int getY() { return y; }
 }
