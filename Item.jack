@@ -45,4 +45,5 @@ class Item {
     /** Return the item's current coordinates. */
     method int getX() { return x; }
     method int getY() { return y; }
+
 }
