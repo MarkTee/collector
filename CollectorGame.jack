@@ -115,18 +115,18 @@ class CollectorGame {
 
         return false; // statement required by Jack compiler
     }
-
-    /** Allows the game to run. */
-    method void run() {
+    
+    /** Displays the splash screen. After the user presses a key, sets up
+     *  and starts the game.
+     */
+    method void splashScreen() {
         var char key; // the key that's currently being pressed by the user
-        var int playerX, playerY; // player character's coordinates
         var int seed; // seed for the random number generator
         let seed = 0;
 
         // show splash screen
         let key = 0;
         do interface.drawSplashScreen();
-        
 
         // wait until the player presses a key to start the game
         while (key = 0) {
@@ -142,7 +142,17 @@ class CollectorGame {
         do interface.draw();
         do player.draw(true);
         do item.newPosition();
+        return;
+    }
 
+
+    /** Starts the actual game. */
+    method void run() {
+        var char key; // the key that's currently being pressed by the user
+        var int playerX, playerY; // player character's coordinates
+
+        do splashScreen();
+        
         // main game loop
         while (true) {
             let key = Keyboard.keyPressed();
