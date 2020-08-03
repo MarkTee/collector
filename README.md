@@ -1,5 +1,6 @@
 # Collector
 ![Screenshot of Collector](/screenshot.png?raw=true)
+
 Collector is a small game implemented in the Jack programming language.
 
 The goal of the game is to collect as many of the items (the hollow squares) as 
