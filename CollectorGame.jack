@@ -26,16 +26,13 @@ class CollectorGame {
     constructor CollectorGame new() {
         // initialize the game's interface
         let interface = Interface.new();
-        do interface.draw();
         
         // initialize the player character, and set their score to 0
         let player = Player.new();
-        do player.draw(true);
         let score = 0;
 
         // initialize the item
         let item = Item.new();
-        do item.newPosition();
                 
         // initialize the list of enemies (which is empty at start)
         let enemyList = EnemyList.new();
@@ -123,6 +120,21 @@ class CollectorGame {
     method void run() {
         var char key; // the key that's currently being pressed by the user
         var int playerX, playerY; // player character's coordinates
+
+        // show splash screen
+        let key = 0;
+        do interface.drawSplashScreen();
+
+        // wait until the player presses a key to start the game
+        while (key = 0) {
+            let key = Keyboard.keyPressed();
+        }    
+        
+        // initialize game
+        do interface.erasePlayArea();
+        do interface.draw();
+        do player.draw(true);
+        do item.newPosition();
 
         // main game loop
         while (true) {
