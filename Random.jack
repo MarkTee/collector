@@ -1,8 +1,9 @@
 // Copyright 2012 Mark Armbrust. Permission granted for educational use.
-// Source: http://nand2tetris-questions-and-answers-forum.32033.n3.nabble.com/Random-number-generator-for-hack-cpu-td4025503.html
+//
+// Source: 
+// http://nand2tetris-questions-and-answers-forum.32033.n3.nabble.com/Random-number-generator-for-hack-cpu-td4025505.html
 
 /** Random.jack -- A not so random PRNG. */
-
 class Random {
     static int seed;
     
@@ -28,7 +29,8 @@ class Random {
         while (mask < range) {
             let mask = mask * 2 + 1;
         }
-        let ret = (Random.rand() / (32767 / range) ) & mask;
+        // improve randomness by 
+        let ret = (Random.rand() / (32767 / range)) & mask;
         while (ret > range) {
             let ret = Random.rand() & mask;
         }
