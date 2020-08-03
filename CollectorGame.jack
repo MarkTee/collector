@@ -10,32 +10,34 @@
  *
  *  This game was written to learn more about the Jack programming language, a
  *  custom language used in the Nand2Tetris course.
+ *
  *  Learn more here: https://www.nand2tetris.org/
  */
 class CollectorGame {
-    field Interface interface;
-    field Player player;
-    field Item item;
+    // game objects
     field EnemyList enemyList;
+    field Interface interface;
+    field Item item;
+    field Player player;
 
     field int score; // the player's current score
     
     /** Constructs a new Collector game. */
     constructor CollectorGame new() {
-        do Random.setSeed(100);
         // initialize the game's interface
         let interface = Interface.new();
         do interface.draw();
-
-        // initialize an item
-        let item = Item.new();
-        do item.newPosition();
         
         // initialize the player character, and set their score to 0
         let player = Player.new();
+        do player.draw(true);
         let score = 0;
-        
-        // initialize the list of enemies
+
+        // initialize the item
+        let item = Item.new();
+        do item.newPosition();
+                
+        // initialize the list of enemies (which is empty at start)
         let enemyList = EnemyList.new();
 
         return this;
@@ -43,52 +45,90 @@ class CollectorGame {
 
     /** Frees memory and destroys the object. */
     method void dispose() {
+        do Memory.deAlloc(enemyList);
         do Memory.deAlloc(interface);
+        do Memory.deAlloc(item);
+        do Memory.deAlloc(player);
         do Memory.deAlloc(this);
         return;
     }
     
+    /** Handles the player getting an item. Performs the following actions:
+     *  - updates score
+     *  - places the item somewhere else
+     *  - spawns a new enemy
+     */
+    method void getItem(int playerX, int playerY) {
+        // update scoreboard
+        let score = score + 1;
+        do interface.updateScore(score);
+
+        // generate new item position
+        do item.newPosition();
+ 
+        // spawn a new enemy
+        do enemyList.newEnemy(playerX, playerY);
+        
+        return;
+    }
+
+    /** Displays the Game Over screen and asks the user whether they'd like
+     *  to play again, or if they'd like to quit.
+     *
+     *  Returns true if the user would like to quit, and false if they'd like
+     *  to play again.
+     */
+    method boolean shouldQuit() {
+        var char key; // the key that's currently being pressed by the user
+        do interface.drawGameOver();
+        while (true) {
+            let key = Keyboard.keyPressed();
+            if (key = 78) { return true; }
+            if (key = 89) { return false; }
+        }
+        return false; // statement required by Jack compiler
+
+    }
+
     /** Allows the game to run. */
     method void run() {
         var char key; // the key that's currently being pressed by the user
-        var boolean running; // whether the game is running
         var int playerX, playerY; // player character's coordinates
         var enemy newEnemy; // the new enemy to be created
-        let key = 0;
-        let running = true;
         
-        do player.draw(true);
 
         // main game loop
-        while (running) {
-           let key = Keyboard.keyPressed();
+        while (true) {
+            let key = Keyboard.keyPressed();
             
-            // handle valid key presses
-            if (key = 81) { let running = false; } // q key
+            // handle movement
             if (key = 131) { do player.move(1); } // up arrow key
             if (key = 130) { do player.move(2); } // left arrow key
             if (key = 133) { do player.move(3); } // down arrow key
             if (key = 132) { do player.move(4); } // right arrow key  
-
+            
+            // get player's new position
             let playerX = player.getX();
             let playerY = player.getY();
-
+            
+            // handle player getting the item
             if ((playerX = item.getX()) & (playerY = item.getY())) {
-                // update scoreboard
-                let score = score + 1;
-                do interface.updateScore(score);
-                // generate new item position
-                do item.newPosition();
-                // spawn an enemy
-                do enemyList.newEnemy(playerX, playerY);
+                do getItem(playerX, playerY); 
             }
-
-            do enemyList.moveEnemies();
+            
+            if (score > 0) {
+                // if the player collided with an enemy, ask them if they'd
+                // like to quit, or if they'd like to play again
+                if (enemyList.moveEnemies(playerX, playerY)) {
+                    if (shouldQuit()) { return; }
+                }
+            }
+            
             do item.draw();
 
             do Sys.wait(50);
         }
-        do dispose();
-        return;
+        return; // statement required by Jack compiler
     }
- }
+
+}

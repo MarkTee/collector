@@ -61,6 +61,7 @@ class Interface {
     method void erasePlayArea() {
         do Screen.setColor(false);
         do Screen.drawRectangle(3, 13, 508, 254);
+        return;
     }
 
     /** Draws the Game Over screen. */
